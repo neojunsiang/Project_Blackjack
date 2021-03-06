@@ -2,9 +2,17 @@
 
 const deck = [];
 const suit = ["Hearts", "Spades"];
-const value = ["A", 10];
-const player1 = [];
-const dealer = [];
+const value = ["K", 10];
+const player1 = {
+    card: [],
+    cardOnHand: 0,
+    whoseTurn: true
+};
+const dealer = {
+    card: [],
+    cardOnHand: 0,
+    whoseTurn: false
+};
 
 // const suit = ["Hearts", "Spades", "Diamonds", "Clubs"];
 // const value = ["K", "Q", "J", 10, 9, 8, 7, 6, 5, 4, 3, 2, "A"];
@@ -106,15 +114,88 @@ shuffleCard();
 
 const distributeCards = () => {
     for (let i = 0; i < 2; i++) {
-        player1.push(deck[0]);
-        dealer.push(deck[1]);
+        player1.card.push(deck[0]);
+        player1.cardOnHand++;
+        dealer.card.push(deck[1]);
+        dealer.cardOnHand++;
         deck.splice(0, 2);
         // deck.shift();
-        console.log("player1", player1);
-        console.log("dealer", dealer);
-        console.log("deck", deck);
+        // console.log("player1", player1);
+        // console.log("dealer", dealer);
+        // console.log("deck", deck);
     }
+    console.log("player1 hands", player1.cardOnHand);
+    console.log("dealer hands", dealer.cardOnHand);
 }
 distributeCards();
+
+// console.log(player1);
+// console.log("initial 1", player1.card[0].value);
+// console.log("initial 2", player1.card[1].value);
+
+const countPoints = (input) => {
+    let total = 0;
+    if (input.cardOnHand < 3) {
+        for (let i = 0; i < input.card.length; i++) {
+            if (input.card[i].value === "A") {
+                input.card[i].value = 11;
+                console.log("new", input.card[i].value);
+            } else if (input.card[i].value === "K" || input.card[i].value === "Q" || input.card[i].value === "J") {
+                input.card[i].value = 10;
+                console.log("non-A value", input.card[i].value);
+            } else {
+                console.log("no change", input.card[i].value);
+            }
+            total += input.card[i].value;
+        }
+        return total;
+    } else if (input.cardOnHand === 3) {
+        for (let i = 0; i < input.card.length; i++) {
+            if (input.card[i].value === "A") {
+                input.card[i].value = 10;
+                console.log("new", input.card[i].value);
+            } else if (input.card[i].value === "K" || input.card[i].value === "Q" || input.card[i].value === "J") {
+                input.card[i].value = 10;
+                console.log("non-A value", input.card[i].value);
+            } else {
+                console.log("no change", input.card[i].value);
+            }
+            total += input.card[i].value;
+        }
+        return total;
+    } else if (input.cardOnHand >= 4) {
+        for (let i = 0; i < input.card.length; i++) {
+            if (input.card[i].value === "A") {
+                input.card[i].value = 1;
+                console.log("new", input.card[i].value);
+            } else if (input.card[i].value === "K" || input.card[i].value === "Q" || input.card[i].value === "J") {
+                input.card[i].value = 10;
+                console.log("non-A value", input.card[i].value);
+            } else {
+                console.log("no change", input.card[i].value);
+            }
+            total += input.card[i].value;
+        }
+        return total;
+    }
+}
+// console.log(player1);
+// console.log("count points player", countPoints(player1));
+// console.log("count points dealer", countPoints(dealer));
+// console.log("count points player", countPoints(player1));
+// console.log("count points dealer", countPoints(dealer));
+// console.log("count points player", countPoints(player1));
+// console.log("count points dealer", countPoints(dealer));
+
+const changeTurn = (who) => {
+    countPoints(who);
+    if (!who.whoseTurn) {
+        return dealer
+    } else {
+        return player1
+    }
+}
+console.log(changeTurn(player1));
+
 
 
