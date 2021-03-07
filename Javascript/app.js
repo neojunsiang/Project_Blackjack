@@ -1,8 +1,7 @@
 // console.log("Linked");
 
 const deck = [];
-// const suit = ["Hearts", "Spades"];
-// const value = ["K", 10, 2];
+
 const player1 = {
     card: [],
     cardOnHand: 0,
@@ -17,6 +16,9 @@ const dealer = {
 const suit = ["Hearts", "Spades", "Diamonds", "Clubs"];
 const value = ["K", "Q", "J", 10, 9, 8, 7, 6, 5, 4, 3, 2, "A"];
 
+// const suit = ["Hearts", "Spades"];
+// const value = ["K", 10, 2];
+
 // Make Cards
 const makeCard = (suit, value) => {
     for (let i = 0; i < suit.length; i++) {
@@ -25,13 +27,10 @@ const makeCard = (suit, value) => {
                 suit: suit[i],
                 value: value[j]
             }
-            // console.log(card);
             deck.push(card);
         }
     }
 }
-
-// makeCard(suit, value);
 
 // Shuffle Cards
 const shuffleCard = () => {
@@ -49,7 +48,6 @@ const shuffleCard = () => {
         // console.log(deck);
     }
 }
-// shuffleCard();
 
 // Distribute cards
 const distributeCards = () => {
@@ -61,8 +59,8 @@ const distributeCards = () => {
         deck.splice(0, 2);
     }
 }
-// distributeCards();
 
+// Count points
 const countPoints = (input) => {
     let total = 0;
     if (input.cardOnHand < 3) {
@@ -112,39 +110,6 @@ const countPoints = (input) => {
         return input.points = total;
     }
 }
-// console.log(player1.card);
-// console.log(countPoints(player1));
-
-// const changeTurn = (who) => {
-//     console.log(countPoints(who));
-//     if (who.whoseTurn === true) {
-//         return dealer
-//     } else {
-//         return player1
-//     }
-// }
-// console.log(changeTurn(player1));
-
-makeCard(suit, value);
-// console.log("initial", deck);
-shuffleCard();
-// console.log("after shuffle", deck);
-distributeCards();
-// console.log("initial on player", player1);
-// console.log("initial on dealer", dealer);
-countPoints(player1);
-countPoints(dealer);
-console.log("after point count player1", player1); {
-    console.log("after point count dealer", dealer);
-}
-console.log("deck after distribution", deck);
-
-// console.log(deck.shift());
-// player1.card.push(deck.shift());
-// player1.cardOnHand++;
-// countPoints(player1);
-// console.log(player1);
-// console.log("deck after first draw", deck)
 
 const hitCard = (userInput) => {
     userInput.card.push(deck.shift());
@@ -153,12 +118,18 @@ const hitCard = (userInput) => {
     // console.log("deck length", deck.length);
     return userInput;
 }
-hitCard(player1);
-console.log("player deck after first hit", player1);
-console.log("dealer deck after first hit", dealer);
-console.log('deck after first hit', deck);
 
-console.log(player1.points);
+const playerToHit = () => {
+    while (player1.points < 16) {
+        hitCard(player1);
+    }
+}
+
+const dealerToHit = () => {
+    while (dealer.points < 16) {
+        hitCard(dealer);
+    }
+}
 
 const checkWin = () => {
     if (player1.points > 21) {
@@ -175,4 +146,31 @@ const checkWin = () => {
         }
     }
 }
+
+makeCard(suit, value);
+// console.log("initial", deck);
+shuffleCard();
+// console.log("after shuffle", deck);
+distributeCards();
+console.log("initial on player", player1);
+console.log("initial on dealer", dealer);
+countPoints(player1);
+countPoints(dealer);
+console.log("after point count player1", player1);
+console.log("after point count dealer", dealer);
+console.log("deck after distribution", deck);
+
+// hitCard(player1);
+// console.log("player deck after first hit", player1);
+// console.log("dealer deck after first hit", dealer);
+// console.log('deck after first hit', deck);
+
+playerToHit();
+console.log("player object after hit", player1);
+console.log("player points after hit", player1.points);
+
+dealerToHit();
+console.log("dealer object after hit", dealer);
+console.log("dealer points after dealer hit", dealer.points);
+
 console.log(checkWin());
