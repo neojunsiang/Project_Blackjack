@@ -1,5 +1,7 @@
 const deck = [];
-const startingCardNumber = 2;
+const STARTING_CARD_NUMBER = 2;
+let noOfHitClick = 0
+const MAX_AMOUNT_OF_HIT = 3
 
 const player = {
     card: [],
@@ -113,58 +115,101 @@ $(() => {
     }
 
     const dealerToHit = () => {
+        countPoints(dealer);
+        let LOOP_COUNT = 0;
         while (dealer.points < 16) {
+            LOOP_COUNT++;
+            console.log(LOOP_COUNT);
             hitCard(dealer);
+            const $addCard = $("<div>").addClass("card");
+            const $hitCard = $addCard.attr("id", "dealer" + (LOOP_COUNT + 1));
+            $hitCard.append(dealer.card[LOOP_COUNT + 1].value);
+            $(".dealer").append($hitCard);
+        }
+    }
+
+    const checkBust = () => {
+        if (player.points > 21) {
+            return $(".result").text("Player Bust!");
+        } else if (dealer.points > 21) {
+            return $(".result").text("Dealer Bust!");
         }
     }
 
     const checkWin = () => {
         if (player.points > 21) {
-            return "Player Bust!";
-        } else if (dealer.points > 22) {
-            return "Dealer Bust!"
+            return $(".result").text("Player Bust!");
+        } else if (dealer.points > 21) {
+            return $(".result").text("Dealer Bust!");
         } else {
             if (player.points > dealer.points) {
-                return "Player Wins!"
+                return $(".result").text("Player Wins!");
             } else if (player.points < dealer.points) {
-                return "Dealer Wins!"
+                return $(".result").text("Dealer Wins!");
             } else {
-                return "Game Tie!"
+                return $(".result").text("Game Tie!");
             }
         }
     }
 
+    const calculateDeckLength = () => {
+        $('.remain').text("Remaining: " + deck.length);
+    }
+
+    const pointsTracker = (subject) => {
+        countPoints(subject);
+        if (subject === player) {
+            $("#playerpoints").text("Player's Point: " + subject.points);
+        } else {
+            $("#dealerpoints").text("Dealer's Point: " + subject.points);
+        }
+    }
+
     $("#start").on('click', () => {
+        $("#start").hide();
         makeCard(suit, value);
         shuffleCard();
         $('.remain').text("Remaining: " + deck.length);
     }).on('click', () => {
         distributeCards();
-        for (let i = 0; i < startingCardNumber; i++) {
+        for (let i = 0; i < STARTING_CARD_NUMBER; i++) {
             $("#dealer" + i).append(dealer.card[i].value);
             $("#player" + i).append(player.card[i].value);
         }
-        $('.remain').text("Remaining: " + deck.length);
+        pointsTracker(player);
+        calculateDeckLength();
     })
 
-    let noOfHitClick = 0
-    let maxAmountOfHit = 3
     $("#hit").on('click', () => {
-        if (noOfHitClick < maxAmountOfHit) {
+        if (noOfHitClick < MAX_AMOUNT_OF_HIT) {
             hitCard(player);
             const $addCard = $("<div>").addClass("card");
-            // console.log(player);
             const $hitCard = $addCard.attr("id", "player" + (noOfHitClick + 2));
             $hitCard.append(player.card[(noOfHitClick + 2)].value);
             $(".player").append($hitCard);
-            $('.remain').text("Remaining: " + deck.length);
-            noOfHitClick++;
+            calculateDeckLength();
+            pointsTracker(player);
+            checkBust();
+            noOfHitClick++
         } else {
-            return $("#hit").hide()
+            $("#hit").hide();
+            checkWin();
         }
     });
 
 
-
+    $('#stay').on('click', () => {
+        // $(".notify").toggleClass();
+        dealerToHit();
+        // pointsTracker(dealer);
+        calculateDeckLength();
+        pointsTracker(dealer);
+        checkWin();
+    })
 
 })
+
+
+
+
+

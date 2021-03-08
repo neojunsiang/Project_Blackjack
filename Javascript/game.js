@@ -1,7 +1,7 @@
 // console.log("Linked");
 
 const deck = [];
-const player1 = {
+const player = {
     card: [],
     cardOnHand: 0,
     whoseTurn: true
@@ -12,11 +12,11 @@ const dealer = {
     whoseTurn: false
 };
 
-const suit = ["Hearts", "Spades", "Diamonds", "Clubs"];
-const value = ["K", "Q", "J", 10, 9, 8, 7, 6, 5, 4, 3, 2, "A"];
+// const suit = ["Hearts", "Spades", "Diamonds", "Clubs"];
+// const value = ["K", "Q", "J", 10, 9, 8, 7, 6, 5, 4, 3, 2, "A"];
 
-// const suit = ["Hearts", "Spades"];
-// const value = ["K", 10, 2];
+const suit = ["Hearts", "Spades"];
+const value = ["K", 9, "A"];
 
 // Make Cards
 const makeCard = (suit, value) => {
@@ -50,11 +50,11 @@ const shuffleCard = () => {
 
 // Distribute cards
 const distributeCards = () => {
-    const playerDeck = player1.card;
+    const playerDeck = player.card;
     const dealerDeck = dealer.card;
     for (let i = 0; i < 2; i++) {
         playerDeck.push(deck[0]);
-        player1.cardOnHand++;
+        player.cardOnHand++;
         dealerDeck.push(deck[1]);
         dealer.cardOnHand++;
         deck.splice(0, 2);
@@ -121,8 +121,8 @@ const hitCard = (userInput) => {
 }
 
 const playerToHit = () => {
-    while (player1.points < 16) {
-        hitCard(player1);
+    while (player.points < 16) {
+        hitCard(player);
     }
 }
 
@@ -133,14 +133,14 @@ const dealerToHit = () => {
 }
 
 const checkWin = () => {
-    if (player1.points > 21) {
+    if (player.points > 21) {
         return "Player Bust!";
-    } else if (dealer.points > 22) {
+    } else if (dealer.points > 21) {
         return "Dealer Bust!"
     } else {
-        if (player1.points > dealer.points) {
+        if (player.points > dealer.points) {
             return "Player Wins!"
-        } else if (player1.points < dealer.points) {
+        } else if (player.points < dealer.points) {
             return "Dealer Wins!"
         } else {
             return "Game Tie!"
@@ -148,32 +148,52 @@ const checkWin = () => {
     }
 }
 
+// const checkSpecialWin = () => {
+//     if (player.points === 21 && dealer.points === 21) {
+//         console.log("Zao Ah Zao!");
+//     } else if (player.points === 21) {
+//         console.log("Player Ban Luck");
+//     } else if (dealer.points === 21) {
+//         console.log("Dealer Ban Luck");
+//     } else {
+//         return 0;
+//     }
+// }
+
 // Terminal //
 makeCard(suit, value);
 // console.log("initial", deck);
 shuffleCard();
 // console.log("after shuffle", deck);
 distributeCards();
-console.log("initial on player", player1);
-console.log("initial on dealer", dealer);
-countPoints(player1);
-countPoints(dealer);
-console.log("after point count player1", player1);
-console.log("after point count dealer", dealer);
-console.log("deck after distribution", deck.length);
 
-hitCard(player1);
+countPoints(player);
+console.log("initial player", player);
+
+countPoints(dealer);
+console.log("initial dealer", dealer);
+
+console.log(checkSpecialWin());
+// console.log("initial on player", player1);
+// console.log("initial on dealer", dealer);
+// countPoints(player1);
+// countPoints(dealer);
+// console.log("after point count player1", player1);
+// console.log("after point count dealer", dealer);
+// console.log("deck after distribution", deck.length);
+
+hitCard(player);
 // console.log("player deck after first hit", player1);
 // console.log("dealer deck after first hit", dealer);
 // console.log('deck after first hit', deck);
 
-playerToHit();
-console.log("player object after hit", player1);
-console.log("player points after hit", player1.points);
+// playerToHit();
+// console.log("player object after hit", player1);
+// console.log("player points after hit", player1.points);
 
-dealerToHit();
-console.log("dealer object after hit", dealer);
-console.log("dealer points after dealer hit", dealer.points);
-console.log(checkWin());
+// dealerToHit();
+// console.log("dealer object after hit", dealer);
+// console.log("dealer points after dealer hit", dealer.points);
+// console.log(checkWin());
 // Terminal
 

@@ -3,6 +3,10 @@ h1 {
   text-align: center;
 }
 
+.points {
+  text-align: center;
+}
+
 .card {
   position: relative;
   height: 160px;
