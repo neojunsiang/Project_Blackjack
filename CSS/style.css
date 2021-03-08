@@ -1,6 +1,52 @@
+h1 {
+  font-size: 20px;
+  text-align: center;
+}
+
+.card {
+  position: relative;
+  height: 160px;
+  width: 100px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+  border-radius: 10%;
+}
+
+.dealertitle {
+  text-align: center;
+}
+
+.dealer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#card1 {
+  margin-right: 10px;
+}
+
+.deck {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.playertitle {
+  text-align: center;
+}
+
+.player {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#card3 {
+  margin-right: 10px;
+}
+
 .center-bottom {
-  margin: 0;
-  position: absolute;
-  top: 80%;
-  left: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }

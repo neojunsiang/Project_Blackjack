@@ -1,7 +1,6 @@
 // console.log("Linked");
 
 const deck = [];
-
 const player1 = {
     card: [],
     cardOnHand: 0,
@@ -51,10 +50,12 @@ const shuffleCard = () => {
 
 // Distribute cards
 const distributeCards = () => {
+    const playerDeck = player1.card;
+    const dealerDeck = dealer.card;
     for (let i = 0; i < 2; i++) {
-        player1.card.push(deck[0]);
+        playerDeck.push(deck[0]);
         player1.cardOnHand++;
-        dealer.card.push(deck[1]);
+        dealerDeck.push(deck[1]);
         dealer.cardOnHand++;
         deck.splice(0, 2);
     }
@@ -147,6 +148,7 @@ const checkWin = () => {
     }
 }
 
+// Terminal //
 makeCard(suit, value);
 // console.log("initial", deck);
 shuffleCard();
@@ -158,9 +160,9 @@ countPoints(player1);
 countPoints(dealer);
 console.log("after point count player1", player1);
 console.log("after point count dealer", dealer);
-console.log("deck after distribution", deck);
+console.log("deck after distribution", deck.length);
 
-// hitCard(player1);
+hitCard(player1);
 // console.log("player deck after first hit", player1);
 // console.log("dealer deck after first hit", dealer);
 // console.log('deck after first hit', deck);
@@ -172,5 +174,6 @@ console.log("player points after hit", player1.points);
 dealerToHit();
 console.log("dealer object after hit", dealer);
 console.log("dealer points after dealer hit", dealer.points);
-
 console.log(checkWin());
+// Terminal
+
