@@ -26,8 +26,8 @@ In terms of the point counting, the value is represented as follows;
 
 - Card 2 - 9: Number on card will represent the points
 - Card 10, J, Q, K : All represent 10 points
-- Card Ace : If total hand of 2 cards, represent 10 or 11
-  : If total hand of 3 cards, represent 10 or 1
+- Card Ace : If total hand of 2 cards, represent 11
+  : If total hand of 3 cards, represent 10
   : If total hand of 4 or more cards, represent 1
 
 # Game Rules
