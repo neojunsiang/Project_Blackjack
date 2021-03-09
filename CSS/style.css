@@ -35,6 +35,12 @@ h1 {
   justify-content: flex-end;
 }
 
+.remain {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .playertitle {
   text-align: center;
 }
