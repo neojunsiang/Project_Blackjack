@@ -22,6 +22,11 @@ const dealer = {
 
 const suit = ["♥", "♠", "♦", "♣"];
 const value = ["K", "Q", "J", 10, 9, 8, 7, 6, 5, 4, 3, 2, "A"];
+// const value = [7, 6, 5, 4, 3, 2];
+// const value = ["A", "K", "Q"];
+
+
+
 
 $(() => {
     // Make Cards
@@ -106,14 +111,20 @@ $(() => {
         if (input.cardOnHand === STARTING_CARD_NUMBER && countPoints(input) === BANBAN_POINTS) {
             input.roundWin++;
             showDealerCardsAtEnd();
+            $("#stay").hide();
+            $("#hit").hide();
             return $(".result").text(`Ban Ban! ${input.name} Wins!`);
         } else if (input.cardOnHand === STARTING_CARD_NUMBER && countPoints(input) === GAMEPOINT) {
             input.roundWin++;
             showDealerCardsAtEnd();
+            $("#stay").hide();
+            $("#hit").hide();
             return $(".result").text(`Ban Luck! ${input.name} Wins!`);
         } else if (input.cardOnHand === MAX_CARD_NUMBER && countPoints(input) <= GAMEPOINT) {
             input.roundWin++;
             showDealerCardsAtEnd();
+            $("#stay").hide();
+            $("#hit").hide();
             return $(".result").text(`Five Dragon! ${input.name} Wins!`);
         }
     }
@@ -126,44 +137,35 @@ $(() => {
                     $("#playervalue" + i).append(player.card[i].value);
                     $("#playersuit" + i).append(player.card[i].suit);
                     $("#player" + i).show();
-                    // $("#playervalue" + i).show();
-                    // $("#playersuit" + i).show();
                 } else {
                     $("#player" + i).hide();
-                    // $("#playervalue" + i).hide();
-                    // $("#playersuit" + i).hide();
                 }
             }
         } else if (input === dealer) {
             for (let i = 0; i < MAX_CARD_NUMBER; i++) {
                 if (dealer.card[i] !== undefined) {
-                    // $("#dealer" + i).append(dealer.card[i].value);
-                    // $("#dealervalue" + i).append(dealer.card[i].value);
-                    // $("#dealersuit" + i).append(player.card[i].suit);
-                    // $("#dealer" + i).show();
                     $("#dealervalue" + i).hide();
                     $("#dealersuit" + i).hide();
                 } else {
                     $("#dealer" + i).hide();
-                    // $("#dealervalue" + i).show();
-                    // $("#dealersuit" + i).show();
                 }
             }
         }
     }
 
+    // Dealer shows card and points after each round
     const showDealerCardsAtEnd = () => {
         for (let i = 0; i < MAX_CARD_NUMBER; i++) {
             if (dealer.card[i] !== undefined) {
                 $("#dealervalue" + i).append(dealer.card[i].value);
                 $("#dealersuit" + i).append(dealer.card[i].suit);
-                // $("#dealer" + i).show();
                 $("#dealervalue" + i).show();
                 $("#dealersuit" + i).show();
+                $("#dealer" + i).show();
             } else {
                 $("#dealervalue" + i).hide();
                 $("#dealersuit" + i).hide();
-                // $("#dealer" + i).hide();
+                $("#dealer" + i).hide();
             }
         }
         pointsTracker(dealer);
@@ -173,7 +175,6 @@ $(() => {
     const hitCardProcess = (userInput) => {
         userInput.card.push(deck.shift());
         userInput.cardOnHand++;
-        // countPoints(userInput);
         pointsTracker(userInput);
         return userInput;
     }
@@ -184,19 +185,16 @@ $(() => {
             for (let i = 0; i < MAX_CARD_NUMBER; i++) {
                 $("#playervalue" + i).empty();
                 $("#playersuit" + i).empty();
-                // $("#player" + i).empty();
             }
-        } else {
+        } else if (input === dealer) {
             for (let i = 0; i < MAX_CARD_NUMBER; i++) {
                 $("#dealervalue" + i).empty();
                 $("#dealersuit" + i).empty();
-                // $("#dealer" + i).empty();
             }
         }
-
     }
 
-    // On repeat hit cards
+    // <Player> On repeat hit cards
     const onHit = () => {
         if (player.cardOnHand < MAX_CARD_NUMBER) {
             hitCardProcess(player);
@@ -216,10 +214,14 @@ $(() => {
         if (player.totalPoints > GAMEPOINT) {
             dealer.roundWin++;
             showDealerCardsAtEnd();
+            $("#stay").hide();
+            $("#hit").hide();
             return $(".result").text("Player Bust! Dealer Wins!");
         } else if (dealer.totalPoints > GAMEPOINT) {
             player.roundWin++;
             showDealerCardsAtEnd();
+            $("#stay").hide();
+            $("#hit").hide();
             return $(".result").text("Dealer Bust! Player Wins");
         }
     }
@@ -229,9 +231,6 @@ $(() => {
         countPoints(dealer);
         while (dealer.totalPoints < MIN_POINT) {
             hitCardProcess(dealer);
-            showDealerCardsAtEnd();
-            render(dealer)
-            // showCards(dealer);
         }
     }
 
@@ -239,18 +238,28 @@ $(() => {
     const checkWin = () => {
         if (player.totalPoints > GAMEPOINT) {
             dealer.roundWin++;
+            $("#stay").hide();
+            $("#hit").hide();
             return (".result").text("Player Bust! Dealer Wins");
         } else if (dealer.totalPoints > GAMEPOINT) {
             player.roundWin++;
+            $("#stay").hide();
+            $("#hit").hide();
             return $(".result").text("Dealer Bust! Player Wins");
         } else {
             if (player.totalPoints > dealer.totalPoints) {
                 player.roundWin++;
+                $("#stay").hide();
+                $("#hit").hide();
                 return $(".result").text("Player Wins!");
             } else if (player.totalPoints < dealer.totalPoints) {
                 dealer.roundWin++;
+                $("#stay").hide();
+                $("#hit").hide();
                 return $(".result").text("Dealer Wins!");
             } else if (player.totalPoints === dealer.totalPoints) {
+                $("#stay").hide();
+                $("#hit").hide();
                 return $(".result").text("Game Tie!");
             }
         }
@@ -284,14 +293,16 @@ $(() => {
         showCards(dealer);
         pointsTracker(player);
         calculateDeckLength();
-        checkSpecialWin(player);
-        checkSpecialWin(dealer);
+        checkSpecialWin(player) || checkSpecialWin(dealer);
+        // checkSpecialWin(dealer);
         roundTracker(player);
         roundTracker(dealer);
     }
 
     // Continue game
     const continueGame = () => {
+        $("#hit").show();
+        $("#stay").show();
         $(".result").text("");
         player.card = [];
         dealer.card = [];
@@ -342,9 +353,10 @@ $(() => {
         } else {
             dealerToHit();
             calculateDeckLength();
-            showDealerCardsAtEnd();
             checkSpecialWin(dealer);
             checkWin();
+            render(dealer);
+            showDealerCardsAtEnd();
             roundTracker(dealer);
         }
     })
