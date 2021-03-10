@@ -1,15 +1,18 @@
 .introduction {
   text-align: center;
+  font-family: "Times New Roman";
+  font-size: 20px;
 }
 
 h1 {
-  font-size: 20px;
+  font-size: 25px;
   text-align: center;
 }
 
-.points {
+/* .points {
+  font-size: 18px;
   text-align: center;
-}
+} */
 
 .card {
   position: relative;
@@ -20,10 +23,13 @@ h1 {
 }
 
 .dealertitle {
+  font-size: 20px;
   text-align: center;
 }
 
 .dealermenu {
+  font-size: 18px;
+  text-align: center;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -33,6 +39,17 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.dealervalue {
+  font-size: 20px;
+  padding-left: 5px;
+}
+
+.dealersuit {
+  font-size: 40px;
+  padding-top: 20px;
+  text-align: center;
 }
 
 #card1 {
@@ -45,17 +62,25 @@ h1 {
   justify-content: flex-end;
 }
 
+#deckfacedown {
+  background-color: lightblue;
+}
+
 .remain {
+  font-size: 18px;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
 }
 
 .playertitle {
+  font-size: 20px;
   text-align: center;
 }
 
 .playermenu {
+  font-size: 18px;
+  text-align: center;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -67,11 +92,22 @@ h1 {
   justify-content: center;
 }
 
+.playervalue {
+  font-size: 20px;
+  padding-left: 5px;
+}
+
+.playersuit {
+  font-size: 40px;
+  padding-top: 20px;
+  text-align: center;
+}
+
 #card3 {
   margin-right: 10px;
 }
 
 .center-bottom {
-  display: flex;
-  justify-content: space-around;
+  text-align: center;
+  padding: 15px 20px 15px 20px;
 }
