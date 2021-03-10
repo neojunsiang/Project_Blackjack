@@ -105,15 +105,15 @@ $(() => {
         countPoints(input);
         if (input.cardOnHand === STARTING_CARD_NUMBER && countPoints(input) === BANBAN_POINTS) {
             input.roundWin++;
-            showDealerCards();
+            showDealerCardsAtEnd();
             return $(".result").text(`Ban Ban! ${input.name} Wins!`);
         } else if (input.cardOnHand === STARTING_CARD_NUMBER && countPoints(input) === GAMEPOINT) {
             input.roundWin++;
-            showDealerCards();
+            showDealerCardsAtEnd();
             return $(".result").text(`Ban Luck! ${input.name} Wins!`);
         } else if (input.cardOnHand === MAX_CARD_NUMBER && countPoints(input) <= GAMEPOINT) {
             input.roundWin++;
-            showDealerCards();
+            showDealerCardsAtEnd();
             return $(".result").text(`Five Dragon! ${input.name} Wins!`);
         }
     }
@@ -143,7 +143,7 @@ $(() => {
         }
     }
 
-    const showDealerCards = () => {
+    const showDealerCardsAtEnd = () => {
         for (let i = 0; i < MAX_CARD_NUMBER; i++) {
             if (dealer.card[i] !== undefined) {
                 $("#dealer" + i).append(dealer.card[i].value);
@@ -198,11 +198,11 @@ $(() => {
     const checkBust = () => {
         if (player.totalPoints > GAMEPOINT) {
             dealer.roundWin++;
-            showDealerCards();
+            showDealerCardsAtEnd();
             return $(".result").text("Player Bust! Dealer Wins!");
         } else if (dealer.totalPoints > GAMEPOINT) {
             player.roundWin++;
-            showDealerCards();
+            showDealerCardsAtEnd();
             return $(".result").text("Dealer Bust! Player Wins");
         }
     }
@@ -212,8 +212,9 @@ $(() => {
         countPoints(dealer);
         while (dealer.totalPoints < MIN_POINT) {
             hitCardProcess(dealer);
+            showDealerCardsAtEnd();
             render(dealer)
-            showCards(dealer);
+            // showCards(dealer);
         }
     }
 
@@ -259,6 +260,7 @@ $(() => {
         $("#dealerround").text("Dealer Round Won: " + dealer.roundWin);
     }
 
+    // Initial gameplay
     const gamePlay = () => {
         distributeCards();
         showCards(player);
@@ -280,14 +282,31 @@ $(() => {
         dealer.cardOnHand = 0;
         player.totalPoints = 0;
         dealer.totalPoints = 0;
+        $(".result").empty();
         pointsTracker(player);
         pointsTracker(dealer);
         render(player);
         render(dealer);
     }
 
+    // Pre-game Introduction
+    const preGame = () => {
+        $(".container").hide();
+        $("#hit").hide();
+        $("#stay").hide();
+        $("#continue").hide();
+        $("#end").hide();
+    }
+
     // Game on start
+    preGame();
     $("#start").on('click', () => {
+        $(".container").show();
+        $("#stay").show();
+        $("#continue").show();
+        $("#end").show();
+        $("#hit").show();
+        $(".introduction").hide();
         $("#start").hide();
         makeCard(suit, value);
         shuffleCard();
@@ -301,23 +320,31 @@ $(() => {
 
     // Proceed to Dealer Turn
     $('#stay').on('click', () => {
-        dealerToHit();
-        calculateDeckLength();
-        showDealerCards();
-        checkSpecialWin(dealer);
-        checkWin();
-        roundTracker(dealer);
+        if (player.totalPoints < MIN_POINT) {
+            alert("Mininum 16 points is required. Please hit as per needed.")
+        } else {
+            dealerToHit();
+            calculateDeckLength();
+            showDealerCardsAtEnd();
+            checkSpecialWin(dealer);
+            checkWin();
+            roundTracker(dealer);
+        }
     })
 
     $("#continue").on('click', () => {
-        continueGame();
-        gamePlay();
-        if (deck.length < MAX_CARD_NUMBER) {
-            makeCard(suit, value);
-            shuffleCard();
-            calculateDeckLength();
+        if ($(".result").text() === "") {
+            alert("Please complete the round before proceeding...");
         } else {
-            return;
+            continueGame();
+            gamePlay();
+            if (deck.length < MAX_CARD_NUMBER) {
+                makeCard(suit, value);
+                shuffleCard();
+                calculateDeckLength();
+            } else {
+                return;
+            }
         }
     });
 

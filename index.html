@@ -16,8 +16,26 @@
 </head>
 
 <body>
+    <h1>BLACKJACK</h1>
+    <p class="introduction"> Welcome to game of Blackjack! <br>
+        Game objective - Get a hand of higher points without exceeding 21 points! <br>
+    </p>
+    <br>
+    <p class="introduction"> <b><u>Point System</u></b> <br>
+        2 - 10: Number on card represent the point <br>
+        J, Q, K: Represent as 10 points <br>
+        Ace: 11 points for <b>2 cards</b> on hand, 10 points for <b>3 cards</b> on hand and 1 point for <b>4 cards and
+            above
+    </p>
+    <br>
+    <p class="introduction"> <b><u>Keys</u></b> <br>
+        <b>Start</b> - Start Game <br>
+        <b>Hit</b> - Hit card <br>
+        <b>Continue</b> - Continue game after round ends
+        <b>End</b> - Restart game
+    </p>
+    <p class="introduction">Press Start to Continue</p>
     <div class="container">
-        <h1>BLACKJACK</h1>
         <p class="dealertitle">Dealer</p>
         <div class="dealermenu">
             <p class="points" id="dealerpoints">Dealer's Point</p>
@@ -32,7 +50,6 @@
         </div>
         <br>
         <p class='remain'></p>
-        <!-- <p class='notify'>Dealer's Turn</p> -->
         <p class="result"></p>
         <div class="deck">
             <div class="card">
@@ -52,7 +69,6 @@
         </div>
     </div>
     </div>
-    <br>
     <br>
     <div class="center-bottom">
         <button id="hit">Hit</button>
