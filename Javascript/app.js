@@ -19,14 +19,6 @@ const suit = ["Hearts", "Spades", "Diamonds", "Clubs"];
 const value = ["K", "Q", "J", 10, 9, 8, 7, 6, 5, 4, 3, 2, "A"];
 
 $(() => {
-    // Restart game
-    // const render = () => {
-    //     $("#restart").show();
-    //     $("#restart").on('click', () => {
-    //         window.location.reload();
-    //     })
-    // }
-
     // Make Cards
     const makeCard = (suit, value) => {
         for (let i = 0; i < suit.length; i++) {
@@ -125,7 +117,7 @@ $(() => {
         } else if (input.cardOnHand === STARTING_CARD_NUMBER && countPoints(input) === 21) {
             return $(".result").text(`Ban Luck! ${input.name} Wins!`);
         } else if (input.cardOnHand === MAX_CARD_NUMBER && countPoints(input) <= 21) {
-            return $(".result").text(`You are a Dragon! ${input.name} Wins!`);
+            return $(".result").text(`Five Dragon! ${input.name} Wins!`);
         }
     }
 
@@ -267,7 +259,6 @@ $(() => {
         render2(dealer);
     }
 
-
     // Game on start
     $("#start").on('click', () => {
         // $("#restart").hide();
@@ -293,16 +284,18 @@ $(() => {
         continueGame();
         gamePlay();
         pointsTracker(dealer);
+        if (deck.length < 5) {
+            makeCard(suit, value);
+            shuffleCard();
+            calculateDeckLength();
+        } else {
+            return;
+        }
     });
 
-    // if (deck.length === 0) {
-    //     makeCard();
-    //     shuffleCard();
-    // } else {
-    //     continueGame();
-    // }
-
-
+    $("#end").on('click', () => {
+        window.location.reload();
+    })
 })
 
 
