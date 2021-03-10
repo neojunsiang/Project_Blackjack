@@ -20,7 +20,7 @@ const dealer = {
     roundWin: 0
 };
 
-const suit = ["Hearts", "Spades", "Diamonds", "Clubs"];
+const suit = ["♥", "♠", "♦", "♣"];
 const value = ["K", "Q", "J", 10, 9, 8, 7, 6, 5, 4, 3, 2, "A"];
 
 $(() => {
@@ -123,21 +123,30 @@ $(() => {
         if (input === player) {
             for (let i = 0; i < MAX_CARD_NUMBER; i++) {
                 if (player.card[i] !== undefined) {
-                    $("#player" + i).append(player.card[i].value);
+                    $("#playervalue" + i).append(player.card[i].value);
+                    $("#playersuit" + i).append(player.card[i].suit);
                     $("#player" + i).show();
-                    $()
+                    // $("#playervalue" + i).show();
+                    // $("#playersuit" + i).show();
                 } else {
                     $("#player" + i).hide();
+                    // $("#playervalue" + i).hide();
+                    // $("#playersuit" + i).hide();
                 }
             }
         } else if (input === dealer) {
             for (let i = 0; i < MAX_CARD_NUMBER; i++) {
                 if (dealer.card[i] !== undefined) {
                     // $("#dealer" + i).append(dealer.card[i].value);
-                    $("#dealer" + i).show();
-
+                    // $("#dealervalue" + i).append(dealer.card[i].value);
+                    // $("#dealersuit" + i).append(player.card[i].suit);
+                    // $("#dealer" + i).show();
+                    $("#dealervalue" + i).hide();
+                    $("#dealersuit" + i).hide();
                 } else {
                     $("#dealer" + i).hide();
+                    // $("#dealervalue" + i).show();
+                    // $("#dealersuit" + i).show();
                 }
             }
         }
@@ -146,11 +155,15 @@ $(() => {
     const showDealerCardsAtEnd = () => {
         for (let i = 0; i < MAX_CARD_NUMBER; i++) {
             if (dealer.card[i] !== undefined) {
-                $("#dealer" + i).append(dealer.card[i].value);
-                $("#dealer" + i).show();
-
+                $("#dealervalue" + i).append(dealer.card[i].value);
+                $("#dealersuit" + i).append(dealer.card[i].suit);
+                // $("#dealer" + i).show();
+                $("#dealervalue" + i).show();
+                $("#dealersuit" + i).show();
             } else {
-                $("#dealer" + i).hide();
+                $("#dealervalue" + i).hide();
+                $("#dealersuit" + i).hide();
+                // $("#dealer" + i).hide();
             }
         }
         pointsTracker(dealer);
@@ -169,11 +182,15 @@ $(() => {
     const render = (input) => {
         if (input === player) {
             for (let i = 0; i < MAX_CARD_NUMBER; i++) {
-                $("#player" + i).empty();
+                $("#playervalue" + i).empty();
+                $("#playersuit" + i).empty();
+                // $("#player" + i).empty();
             }
         } else {
             for (let i = 0; i < MAX_CARD_NUMBER; i++) {
-                $("#dealer" + i).empty();
+                $("#dealervalue" + i).empty();
+                $("#dealersuit" + i).empty();
+                // $("#dealer" + i).empty();
             }
         }
 
@@ -332,6 +349,7 @@ $(() => {
         }
     })
 
+    // Proceed to continue
     $("#continue").on('click', () => {
         if ($(".result").text() === "") {
             alert("Please complete the round before proceeding...");
@@ -348,6 +366,7 @@ $(() => {
         }
     });
 
+    // Proceed to end
     $("#end").on('click', () => {
         window.location.reload();
     })
