@@ -1,8 +1,6 @@
 const deck = [];
 const STARTING_CARD_NUMBER = 2;
 const MAX_CARD_NUMBER = 5;
-// let noOfHitClick = 0;
-// const MAX_AMOUNT_OF_HIT = 3;
 
 const player = {
     name: "Player",
@@ -122,7 +120,7 @@ $(() => {
     const checkSpecialWin = (input) => {
         countPoints(input);
         if (input.cardOnHand === STARTING_CARD_NUMBER && countPoints(input) === 22) {
-            $(`#${input}points`).hide();
+            // $(`#${input}points`).hide();
             return $(".result").text(`Ban Ban! ${input.name} Wins!`);
         } else if (input.cardOnHand === STARTING_CARD_NUMBER && countPoints(input) === 21) {
             return $(".result").text(`Ban Luck! ${input.name} Wins!`);
@@ -186,6 +184,7 @@ $(() => {
             render2(player);
             showCards(player);
             calculateDeckLength();
+            checkSpecialWin(player);
             checkBust();
         } else {
             $("#hit").hide();
@@ -256,25 +255,8 @@ $(() => {
         checkSpecialWin(dealer);
     }
 
-    const playerPlay = () => {
-        $("#hit").on('click', () => {
-            repeatHit();
-        })
-    }
-
-    const dealerPlay = () => {
-        $('#stay').on('click', () => {
-            dealerToHit();
-            calculateDeckLength();
-            pointsTracker(dealer);
-            checkSpecialWin(dealer);
-            checkWin();
-        })
-    }
-
-
     const continueGame = () => {
-        $(".result").hide();
+        $(".result").text("");
         player.card = [];
         dealer.card = [];
         player.cardOnHand = 0;
@@ -292,18 +274,25 @@ $(() => {
         $("#start").hide();
         makeCard(suit, value);
         shuffleCard();
-    }).on('click', () => {
         gamePlay();
+    });
+
+    $("#hit").on('click', () => {
+        repeatHit();
     })
 
-    playerPlay();
-    dealerPlay();
+    $('#stay').on('click', () => {
+        dealerToHit();
+        calculateDeckLength();
+        pointsTracker(dealer);
+        checkSpecialWin(dealer);
+        checkWin();
+    })
+
     $("#restart").on('click', () => {
         continueGame();
         gamePlay();
         pointsTracker(dealer);
-        playerPlay();
-        dealerPlay();
     });
 
     // if (deck.length === 0) {
