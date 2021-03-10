@@ -19,7 +19,10 @@
     <div class="container">
         <h1>BLACKJACK</h1>
         <p class="dealertitle">Dealer</p>
-        <p class=points id="dealerpoints">Dealer's Point</p>
+        <div class="dealermenu">
+            <p class="points" id="dealerpoints">Dealer's Point</p>
+            <p class="round" id="dealerround">Round Won</p>
+        </div>
         <div class="dealer">
             <div class="card" id="dealer0"></div>
             <div class="card" id="dealer1"></div>
@@ -36,7 +39,10 @@
             </div>
         </div>
         <p class="playertitle">Player</p>
-        <p class=points id="playerpoints">Player's Point</p>
+        <div class="playermenu">
+            <p class="points" id="playerpoints">Player's Point</p>
+            <p class="round" id="playerround">Round Won</p>
+        </div>
         <div class="player">
             <div class="card" id="player0"></div>
             <div class="card" id="player1"></div>
@@ -52,7 +58,7 @@
         <button id="hit">Hit</button>
         <button id="stay">Stay</button>
         <button id="start">Start</button>
-        <button id="restart">Restart</button>
+        <button id="continue">Continue</button>
         <button id="end">End</button>
     </div>
     </div>

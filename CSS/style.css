@@ -19,6 +19,12 @@ h1 {
   text-align: center;
 }
 
+.dealermenu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
 .dealer {
   display: flex;
   flex-wrap: wrap;
@@ -43,6 +49,12 @@ h1 {
 
 .playertitle {
   text-align: center;
+}
+
+.playermenu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .player {
