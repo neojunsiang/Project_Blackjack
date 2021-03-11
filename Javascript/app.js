@@ -1,3 +1,4 @@
+// Main Data
 const deck = [];
 const STARTING_CARD_NUMBER = 2;
 const MAX_CARD_NUMBER = 5;
@@ -7,7 +8,6 @@ const MIN_POINT = 16;
 const HIT_AUDIO = new Audio("Sounds/Huat Ah!.mp3");
 const STAY_AUDIO = new Audio("Sounds/Ding Ding.mp3");
 
-// Main data
 const player = {
     name: "Player",
     card: [],
@@ -103,9 +103,9 @@ $(() => {
         }
     }
 
-    // Show cards when there is value
+    // Append value to card
     const showCards = (input) => {
-        if (input === player) {
+        if (input === player) { // show for player
             for (let i = 0; i < MAX_CARD_NUMBER; i++) {
                 if (player.card[i] !== undefined) {
                     $("#playervalue" + i).append(player.card[i].value);
@@ -115,7 +115,7 @@ $(() => {
                     $("#player" + i).hide();
                 }
             }
-        } else if (input === dealer) {
+        } else if (input === dealer) { // hide for dealer 
             for (let i = 0; i < MAX_CARD_NUMBER; i++) {
                 if (dealer.card[i] !== undefined) {
                     $("#dealervalue" + i).hide();
@@ -145,7 +145,7 @@ $(() => {
         pointsTracker(dealer);
     }
 
-    // Hit cards
+    // How hit card works
     const hitCardProcess = (userInput) => {
         userInput.card.push(deck.shift());
         userInput.cardOnHand++;
@@ -153,7 +153,7 @@ $(() => {
         return userInput;
     }
 
-    // <Player> On repeat hit cards
+    // Player on repeated hit card
     const onHit = () => {
         if (player.cardOnHand < MAX_CARD_NUMBER) {
             hitCardProcess(player);
@@ -176,7 +176,7 @@ $(() => {
         }
     }
 
-    // Hide Stay & Hit Button
+    // Hide Stay & Hit Button for UI purpose
     const hideStayAndHitButtons = () => {
         $("#stay").hide();
         $("#hit").hide();
@@ -275,7 +275,7 @@ $(() => {
         $("#dealerround").text("Dealer Round Won: " + dealer.roundWin);
     }
 
-    // Empty content
+    // Empty content to append value on cards
     const render = (input) => {
         if (input === player) {
             for (let i = 0; i < MAX_CARD_NUMBER; i++) {
@@ -291,7 +291,8 @@ $(() => {
         }
     }
 
-    // Initial gameplay
+    // INTEGRATING ABOVE FUNCTIONS TO GAMEPLAY FLOW
+    // Initial gameplay process
     const gamePlay = () => {
         distributeCards();
         showCards(player);
@@ -303,7 +304,7 @@ $(() => {
         roundTracker(dealer);
     }
 
-    // Continue game
+    // Continue game process
     const continueGame = () => {
         $("#hit").show();
         $("#stay").show();
@@ -343,6 +344,7 @@ $(() => {
         $("#start").hide();
     }
 
+    // START OF GAME 
     // Game on start
     preGame();
     $("#start").on('click', () => {
@@ -352,17 +354,17 @@ $(() => {
         gamePlay();
     });
 
-    // Hit Cards
+    // Hit Cards on Pressing HIT Button
     $("#hit").on('click', () => {
         HIT_AUDIO.play();
         onHit();
     })
 
-    // Proceed to Dealer Turn
+    // Proceed to Dealer Turn on STAY Button
     $('#stay').on('click', () => {
         if (player.totalPoints < MIN_POINT) {
             alert("Mininum 16 points is required. Please hit as per needed.")
-        } else {
+        } else { // show what the dealer will do upon STAY 
             STAY_AUDIO.play();
             dealerToHit();
             calculateDeckLength();
@@ -374,7 +376,7 @@ $(() => {
         }
     })
 
-    // Proceed to continue
+    // Continue game on CONTINUE Button
     $("#continue").on('click', () => {
         if ($(".result").text() === "") {
             alert("Please complete the round before proceeding...");
@@ -391,13 +393,8 @@ $(() => {
         }
     });
 
-    // Proceed to end
+    // Proceed to end On END Button
     $("#end").on('click', () => {
         window.location.reload();
     })
 })
-
-
-
-
-
