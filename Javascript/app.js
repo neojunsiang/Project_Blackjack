@@ -5,7 +5,9 @@ const GAMEPOINT = 21;
 const BANBAN_POINTS = 22;
 const MIN_POINT = 16;
 const HIT_AUDIO = new Audio("Sounds/Huat Ah!.mp3");
+const STAY_AUDIO = new Audio("Sounds/Ding Ding.mp3");
 
+// Main data
 const player = {
     name: "Player",
     card: [],
@@ -361,6 +363,7 @@ $(() => {
         if (player.totalPoints < MIN_POINT) {
             alert("Mininum 16 points is required. Please hit as per needed.")
         } else {
+            STAY_AUDIO.play();
             dealerToHit();
             calculateDeckLength();
             checkSpecialWin(dealer);
