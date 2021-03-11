@@ -73,6 +73,13 @@ h1 {
   justify-content: flex-end;
 }
 
+.result {
+  color: red;
+  font-family: monospace;
+  font-size: 25px;
+  text-align: center;
+}
+
 .playertitle {
   font-size: 20px;
   text-align: center;

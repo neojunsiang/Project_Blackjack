@@ -326,9 +326,9 @@ $(() => {
         $("#end").hide();
     }
 
-    // Game on start
-    preGame();
-    $("#start").on('click', () => {
+    // Action when game starts 
+    const startGame = () => {
+        $("h1").hide()
         $(".container").show();
         $("#stay").show();
         $("#continue").show();
@@ -336,6 +336,12 @@ $(() => {
         $("#hit").show();
         $(".introduction").hide();
         $("#start").hide();
+    }
+
+    // Game on start
+    preGame();
+    $("#start").on('click', () => {
+        startGame();
         makeCard(suit, value);
         shuffleCard();
         gamePlay();
