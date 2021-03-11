@@ -105,30 +105,6 @@ $(() => {
         }
     }
 
-    // Check for Ban Ban & Ban Luck win
-    const checkSpecialWin = (input) => {
-        countPoints(input);
-        if (input.cardOnHand === STARTING_CARD_NUMBER && countPoints(input) === BANBAN_POINTS) {
-            input.roundWin++;
-            showDealerCardsAtEnd();
-            $("#stay").hide();
-            $("#hit").hide();
-            return $(".result").text(`Ban Ban! ${input.name} Wins!`);
-        } else if (input.cardOnHand === STARTING_CARD_NUMBER && countPoints(input) === GAMEPOINT) {
-            input.roundWin++;
-            showDealerCardsAtEnd();
-            $("#stay").hide();
-            $("#hit").hide();
-            return $(".result").text(`Ban Luck! ${input.name} Wins!`);
-        } else if (input.cardOnHand === MAX_CARD_NUMBER && countPoints(input) <= GAMEPOINT) {
-            input.roundWin++;
-            showDealerCardsAtEnd();
-            $("#stay").hide();
-            $("#hit").hide();
-            return $(".result").text(`Five Dragon! ${input.name} Wins!`);
-        }
-    }
-
     // Show cards when there is value
     const showCards = (input) => {
         if (input === player) {
@@ -159,9 +135,9 @@ $(() => {
             if (dealer.card[i] !== undefined) {
                 $("#dealervalue" + i).append(dealer.card[i].value);
                 $("#dealersuit" + i).append(dealer.card[i].suit);
-                $("#dealervalue" + i).show();
-                $("#dealersuit" + i).show();
-                $("#dealer" + i).show();
+                $("#dealer" + i).show("linear").css("background-color", "white");
+                $("#dealervalue" + i).show("linear");
+                $("#dealersuit" + i).show("linear");
             } else {
                 $("#dealervalue" + i).hide();
                 $("#dealersuit" + i).hide();
@@ -179,21 +155,6 @@ $(() => {
         return userInput;
     }
 
-    // Empty content
-    const render = (input) => {
-        if (input === player) {
-            for (let i = 0; i < MAX_CARD_NUMBER; i++) {
-                $("#playervalue" + i).empty();
-                $("#playersuit" + i).empty();
-            }
-        } else if (input === dealer) {
-            for (let i = 0; i < MAX_CARD_NUMBER; i++) {
-                $("#dealervalue" + i).empty();
-                $("#dealersuit" + i).empty();
-            }
-        }
-    }
-
     // <Player> On repeat hit cards
     const onHit = () => {
         if (player.cardOnHand < MAX_CARD_NUMBER) {
@@ -209,23 +170,6 @@ $(() => {
         }
     }
 
-    // Check bust if upon hit by player
-    const checkBust = () => {
-        if (player.totalPoints > GAMEPOINT) {
-            dealer.roundWin++;
-            showDealerCardsAtEnd();
-            $("#stay").hide();
-            $("#hit").hide();
-            return $(".result").text("Player Bust! Dealer Wins!");
-        } else if (dealer.totalPoints > GAMEPOINT) {
-            player.roundWin++;
-            showDealerCardsAtEnd();
-            $("#stay").hide();
-            $("#hit").hide();
-            return $(".result").text("Dealer Bust! Player Wins");
-        }
-    }
-
     // Condition for dealer to hit card
     const dealerToHit = () => {
         countPoints(dealer);
@@ -234,32 +178,79 @@ $(() => {
         }
     }
 
+    // Hide Stay & Hit Button
+    const hideStayAndHitButtons = () => {
+        $("#stay").hide();
+        $("#hit").hide();
+    }
+
+    // Check for Ban Ban & Ban Luck win
+    const checkSpecialWin = (input) => {
+        countPoints(input);
+        if (input.cardOnHand === STARTING_CARD_NUMBER && countPoints(input) === BANBAN_POINTS) {
+            input.roundWin++;
+            showDealerCardsAtEnd();
+            hideStayAndHitButtons();
+            $(".result").show("linear");
+            return $(".result").text(`Ban Ban! ${input.name} Wins!`);
+        } else if (input.cardOnHand === STARTING_CARD_NUMBER && countPoints(input) === GAMEPOINT) {
+            input.roundWin++;
+            showDealerCardsAtEnd();
+            hideStayAndHitButtons();
+            $(".result").show("linear");
+            return $(".result").text(`Ban Luck! ${input.name} Wins!`);
+        } else if (input.cardOnHand === MAX_CARD_NUMBER && countPoints(input) <= GAMEPOINT) {
+            input.roundWin++;
+            showDealerCardsAtEnd();
+            hideStayAndHitButtons();
+            $(".result").show("linear");
+            return $(".result").text(`Five Dragon! ${input.name} Wins!`);
+        }
+    }
+
+    // Check bust if upon hit by player
+    const checkBust = () => {
+        if (player.totalPoints > GAMEPOINT) {
+            dealer.roundWin++;
+            showDealerCardsAtEnd();
+            hideStayAndHitButtons();
+            $(".result").show("linear");
+            return $(".result").text("Player Bust! Dealer Wins!");
+        } else if (dealer.totalPoints > GAMEPOINT) {
+            player.roundWin++;
+            showDealerCardsAtEnd();
+            hideStayAndHitButtons();
+            $(".result").show("linear");
+            return $(".result").text("Dealer Bust! Player Wins");
+        }
+    }
+
     // Check Winner
     const checkWin = () => {
         if (player.totalPoints > GAMEPOINT) {
             dealer.roundWin++;
-            $("#stay").hide();
-            $("#hit").hide();
-            return (".result").text("Player Bust! Dealer Wins");
+            hideStayAndHitButtons();
+            $(".result").show("linear");
+            return $(".result").text("Player Bust! Dealer Wins");
         } else if (dealer.totalPoints > GAMEPOINT) {
             player.roundWin++;
-            $("#stay").hide();
-            $("#hit").hide();
+            hideStayAndHitButtons();
+            $(".result").show("linear");
             return $(".result").text("Dealer Bust! Player Wins");
         } else {
             if (player.totalPoints > dealer.totalPoints) {
                 player.roundWin++;
-                $("#stay").hide();
-                $("#hit").hide();
+                hideStayAndHitButtons();
+                $(".result").show("linear");
                 return $(".result").text("Player Wins!");
             } else if (player.totalPoints < dealer.totalPoints) {
                 dealer.roundWin++;
-                $("#stay").hide();
-                $("#hit").hide();
+                hideStayAndHitButtons();
+                $(".result").show("linear");
                 return $(".result").text("Dealer Wins!");
             } else if (player.totalPoints === dealer.totalPoints) {
-                $("#stay").hide();
-                $("#hit").hide();
+                hideStayAndHitButtons();
+                $(".result").show("linear");
                 return $(".result").text("Game Tie!");
             }
         }
@@ -286,6 +277,22 @@ $(() => {
         $("#dealerround").text("Dealer Round Won: " + dealer.roundWin);
     }
 
+    // Empty content
+    const render = (input) => {
+        if (input === player) {
+            for (let i = 0; i < MAX_CARD_NUMBER; i++) {
+                $("#playervalue" + i).empty();
+                $("#playersuit" + i).empty();
+            }
+        } else if (input === dealer) {
+            for (let i = 0; i < MAX_CARD_NUMBER; i++) {
+                $("#dealervalue" + i).empty();
+                $("#dealersuit" + i).empty();
+                $("#dealer" + i).css("background-color", "lightblue");
+            }
+        }
+    }
+
     // Initial gameplay
     const gamePlay = () => {
         distributeCards();
@@ -294,7 +301,6 @@ $(() => {
         pointsTracker(player);
         calculateDeckLength();
         checkSpecialWin(player) || checkSpecialWin(dealer);
-        // checkSpecialWin(dealer);
         roundTracker(player);
         roundTracker(dealer);
     }
@@ -304,6 +310,7 @@ $(() => {
         $("#hit").show();
         $("#stay").show();
         $(".result").text("");
+        $(".result").hide();
         player.card = [];
         dealer.card = [];
         player.cardOnHand = 0;
@@ -320,10 +327,10 @@ $(() => {
     // Pre-game Introduction
     const preGame = () => {
         $(".container").hide();
-        $("#hit").hide();
-        $("#stay").hide();
+        hideStayAndHitButtons();
         $("#continue").hide();
         $("#end").hide();
+        $(".result").hide();
     }
 
     // Action when game starts 
