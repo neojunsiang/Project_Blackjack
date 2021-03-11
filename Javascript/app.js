@@ -4,6 +4,7 @@ const MAX_CARD_NUMBER = 5;
 const GAMEPOINT = 21;
 const BANBAN_POINTS = 22;
 const MIN_POINT = 16;
+const HIT_AUDIO = new Audio("Sounds/Huat Ah!.mp3");
 
 const player = {
     name: "Player",
@@ -22,11 +23,6 @@ const dealer = {
 
 const suit = ["♥", "♠", "♦", "♣"];
 const value = ["K", "Q", "J", 10, 9, 8, 7, 6, 5, 4, 3, 2, "A"];
-// const value = [7, 6, 5, 4, 3, 2];
-// const value = ["A", "K", "Q"];
-
-
-
 
 $(() => {
     // Make Cards
@@ -356,6 +352,7 @@ $(() => {
 
     // Hit Cards
     $("#hit").on('click', () => {
+        HIT_AUDIO.play();
         onHit();
     })
 
@@ -381,7 +378,7 @@ $(() => {
         } else {
             continueGame();
             gamePlay();
-            if (deck.length < MAX_CARD_NUMBER) {
+            if (deck.length <= MAX_CARD_NUMBER) {
                 makeCard(suit, value);
                 shuffleCard();
                 calculateDeckLength();
