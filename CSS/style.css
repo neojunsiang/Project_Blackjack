@@ -37,10 +37,12 @@ h1 {
 .dealertitle {
   font-size: 20px;
   text-align: center;
+  font-weight: bold;
 }
 
 .dealermenu {
   font-size: 18px;
+  font-weight: bold;
   text-align: center;
   display: flex;
   flex-wrap: wrap;
@@ -84,6 +86,7 @@ h1 {
 
 .remain {
   font-size: 18px;
+  font-weight: bold;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -93,16 +96,19 @@ h1 {
   color: black;
   font-family: monospace;
   font-size: 25px;
+  font-weight: bold;
   text-align: center;
 }
 
 .playertitle {
   font-size: 20px;
+  font-weight: bold;
   text-align: center;
 }
 
 .playermenu {
   font-size: 18px;
+  font-weight: bold;
   text-align: center;
   display: flex;
   flex-wrap: wrap;
